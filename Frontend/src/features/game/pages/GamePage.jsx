@@ -105,7 +105,7 @@ const GamePage = () => {
 
   useEffect(() => {
     fetch("https://negotiate-x-backend.onrender.com/api/auth/get-me", {
-      credentials: "include", // IMPORTANT for cookies
+      credentials: true, // IMPORTANT for cookies
     })
       .then((res) => res.json())
       .then((data) => {
