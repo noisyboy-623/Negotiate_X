@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
+import { getMe } from "../service/game.api";
 
 import SwipeDeck from "../components/SwipeDeck";
 import ProductInfo from "../components/ProductInfo";
@@ -103,18 +104,15 @@ const GamePage = () => {
   //   setStage("home");
   // };
 
-  useEffect(() => {
-    fetch("https://negotiate-x-backend.onrender.com/api/auth/get-me", {
-      credentials: true, // IMPORTANT for cookies
+useEffect(() => {
+  getMe()
+    .then((data) => {
+      if (data.success) {
+        setUser(data.user);
+      }
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setUser(data.user);
-        }
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    .catch((err) => console.error(err));
+}, []);
   if (!user) return <div>Loading...</div>;
 
   return (
