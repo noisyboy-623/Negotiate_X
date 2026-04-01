@@ -1,4 +1,4 @@
-import "./midnightSky.css";
+import "./MidNightSky.css";
 
 const MidnightSky = () => {
   return (
