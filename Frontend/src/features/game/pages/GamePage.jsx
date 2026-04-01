@@ -12,7 +12,7 @@ import ghost from "../images/ghost.png";
 
 import { Navbar, Sidebar } from "../components/index";
 
-const socket = io("http://localhost:3000");
+const socket = io("https://negotiate-x-backend.onrender.com");
 
 const products = [
   {
@@ -104,7 +104,7 @@ const GamePage = () => {
   // };
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/auth/get-me", {
+    fetch("https://negotiate-x-backend.onrender.com/api/auth/get-me", {
       credentials: "include", // IMPORTANT for cookies
     })
       .then((res) => res.json())

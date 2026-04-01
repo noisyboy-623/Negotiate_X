@@ -107,37 +107,37 @@ const Login = () => {
           <img
             src="https://res.cloudinary.com/ddcg0rzlo/image/upload/v1651418249/new-nft_tlfisy.png"
             alt="visual"
-            className="absolute right-23 w-[325px] hover:scale-105 transition"
+            className="absolute right-13 w-[325px] hover:scale-105 transition"
           />
           {/* SOCIAL ICON STACK */}
-          <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-4">
+          {/* <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-4"> */}
             {/* GOOGLE */}
-            <button className="w-10 h-10 rounded-full bg-[#02C173] flex items-center justify-center shadow-md hover:scale-110 hover:shadow-[0_0_20px_rgba(2,193,115,0.7)] transition">
+            {/* <button className="w-10 h-10 rounded-full bg-[#02C173] flex items-center justify-center shadow-md hover:scale-110 hover:shadow-[0_0_20px_rgba(2,193,115,0.7)] transition">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
                 className="w-5"
                 alt="google"
               />
-            </button>
+            </button> */}
 
             {/* GITHUB */}
-            <button className="w-10 h-10 rounded-full bg-[#02C173] flex items-center justify-center shadow-md hover:scale-110 hover:shadow-[0_0_20px_rgba(2,193,115,0.7)] transition">
+            {/* <button className="w-10 h-10 rounded-full bg-[#02C173] flex items-center justify-center shadow-md hover:scale-110 hover:shadow-[0_0_20px_rgba(2,193,115,0.7)] transition">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/733/733553.png"
                 className="w-5 invert"
                 alt="github"
               />
-            </button>
+            </button> */}
 
             {/* X (TWITTER) */}
-            <button className="w-10 h-10 rounded-full bg-[#02C173] flex items-center justify-center shadow-md hover:scale-110 hover:shadow-[0_0_20px_rgba(2,193,115,0.7)] transition">
+            {/* <button className="w-10 h-10 rounded-full bg-[#02C173] flex items-center justify-center shadow-md hover:scale-110 hover:shadow-[0_0_20px_rgba(2,193,115,0.7)] transition">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/733/733579.png"
                 className="w-5"
                 alt="x"
               />
-            </button>
-          </div>
+            </button> */}
+          {/* </div> */}
         </div>
       </div>
 

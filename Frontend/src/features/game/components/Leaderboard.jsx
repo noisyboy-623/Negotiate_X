@@ -8,7 +8,7 @@ const Leaderboard = ({ user }) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:3000/leaderboard")
+    fetch("https://negotiate-x-backend.onrender.com/leaderboard")
       .then((res) => res.json())
       .then((res) => {
         setData(res);

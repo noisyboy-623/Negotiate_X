@@ -28,14 +28,14 @@ export async function registerController(req, res) {
 
   await sendEmail({
     to: email,
-    subject: "Welcome to Perplexity!",
+    subject: "Welcome to Negotiate_X!",
     html: `
                 <p>Hi ${username},</p>
-                <p>Thank you registering at <strong>Perplexity</strong>, We're excited to have you onboard!</p>
+                <p>Thank you registering at <strong>Negotiate_X</strong>, We're excited to have you onboard!</p>
                 <P>Please verify your email by clicking on the link below: </p>
                 <a href="http://localhost:3000/api/auth/verify-email/?token=${emailVerificaton}">Verify Email </a>
                 <p> If it wasn't you , please ignore this email. </p>
-                <p>Best Regards, <br>The Perplexity Team </p>
+                <p>Best Regards, <br>The Negotiate_X Team </p>
                 `,
   });
 
@@ -70,10 +70,223 @@ export async function verifyEmail(req, res) {
     await user.save();
 
     const html = `
-  <h1> Email verified successfully!</h1>
-  <p> Your email has been verified. You can now login to your account. </p>
-  <a href="http://localhost:3000/api/auth/login">Go to login. </a>
-  `;
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Email Verified - NEGOTIATE_X</title>
+        <style>
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+          
+          body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0B0F0E 0%, #060707 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+          }
+
+          .animated-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+          }
+
+          .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+          }
+
+          .blob-1 {
+            width: 300px;
+            height: 300px;
+            background: #02C173;
+            top: 10%;
+            left: 10%;
+            animation: float 6s ease-in-out infinite;
+          }
+
+          .blob-2 {
+            width: 250px;
+            height: 250px;
+            background: #02C173;
+            bottom: 10%;
+            right: 10%;
+            animation: float 8s ease-in-out infinite reverse;
+          }
+
+          @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+          }
+
+          .container {
+            background: rgba(11, 15, 14, 0.8);
+            border: 1px solid rgba(2, 193, 115, 0.2);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(2, 193, 115, 0.1);
+            animation: slideIn 0.6s ease-out;
+          }
+
+          @keyframes slideIn {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #02C173, #00a366);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            animation: scaleIn 0.6s ease-out;
+            box-shadow: 0 0 30px rgba(2, 193, 115, 0.4);
+          }
+
+          @keyframes scaleIn {
+            from {
+              transform: scale(0.5);
+              opacity: 0;
+            }
+            to {
+              transform: scale(1);
+              opacity: 1;
+            }
+          }
+
+          h1 {
+            color: #ffffff;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+          }
+
+          .subtitle {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+          }
+
+          p {
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+          }
+
+          .login-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #02C173, #00a366);
+            color: #000;
+            text-decoration: none;
+            padding: 14px 40px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(2, 193, 115, 0.3);
+            margin-bottom: 20px;
+            display: block;
+          }
+
+          .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 193, 115, 0.5);
+          }
+
+          .login-btn:active {
+            transform: translateY(0);
+          }
+
+          .timer {
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(2, 193, 115, 0.1);
+          }
+
+          .timer strong {
+            color: #02C173;
+          }
+
+          .brand {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+          }
+
+          .brand span:first-child {
+            color: #02C173;
+          }
+
+          .brand span:last-child {
+            color: #ffffff;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="animated-bg">
+          <div class="blob blob-1"></div>
+          <div class="blob blob-2"></div>
+        </div>
+
+        <div class="container">
+          <div class="brand">
+            <span>NEGOTIATE_</span><span>X</span>
+          </div>
+
+          <div class="success-icon">✓</div>
+
+          <h1>Email Verified!</h1>
+          <p class="subtitle">You're all set to begin your negotiation journey</p>
+          <p>Your email has been verified successfully. You can now log in to your account and start playing.</p>
+
+          <a href="http://localhost:5173/login" class="login-btn">Go to Login</a>
+
+          <div class="timer">
+            Redirecting in <strong>5 seconds</strong>... or click the button above.
+          </div>
+        </div>
+
+        <script>
+          setTimeout(() => {
+            window.location.href = 'http://localhost:5173/login';
+          }, 5000);
+        </script>
+      </body>
+      </html>
+    `;
 
     return res.send(html);
   } catch (err) {
