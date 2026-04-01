@@ -339,7 +339,12 @@ export async function loginController(req, res) {
     { expiresIn: "7d" },
   );
 
-  res.cookie("token", token);
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,        // ✅ REQUIRED for HTTPS (Render)
+  sameSite: "none",    // ✅ REQUIRED for cross-origin
+  path: "/",           // ✅ good practice
+});
 
   res.status(201).json({
     message: "User logged-in successfully",
