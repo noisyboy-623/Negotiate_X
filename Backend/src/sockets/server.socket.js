@@ -16,7 +16,7 @@ let io;
 export function initSocket(httpServer) {
   io = new Server(httpServer, {
     cors: {
-      origin: ["http://localhost:5173", "http://127.0.0.1:5500"],
+      origin: ["http://localhost:5173", "http://127.0.0.1:5500","https://negotiate-x-frontend.onrender.com"],
       credentials: true,
     },
   });
