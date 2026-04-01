@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 import SwipeDeck from "../components/SwipeDeck";
 import ProductInfo from "../components/ProductInfo";
-import ChatUI from "../components/ChatUi";
+import ChatUI from "../components/ChatUI";
 import Leaderboard from "../components/Leaderboard";
 import MidnightSky from "../components/MidNightSky";
 import spiderman from "../images/spiderman.jpg";
