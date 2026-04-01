@@ -33,7 +33,7 @@ export async function registerController(req, res) {
                 <p>Hi ${username},</p>
                 <p>Thank you registering at <strong>Negotiate_X</strong>, We're excited to have you onboard!</p>
                 <P>Please verify your email by clicking on the link below: </p>
-                <a href="http://localhost:3000/api/auth/verify-email/?token=${emailVerificaton}">Verify Email </a>
+                <a href="https://negotiate-x-backend.onrender.com/api/auth/verify-email/?token=${emailVerificaton}">Verify Email </a>
                 <p> If it wasn't you , please ignore this email. </p>
                 <p>Best Regards, <br>The Negotiate_X Team </p>
                 `,
