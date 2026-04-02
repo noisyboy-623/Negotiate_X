@@ -218,3 +218,4 @@ const ChatUI = ({ socket, product, agent, onGameOver, onRestart, onBack }) => {
 };
 
 export default ChatUI;
+

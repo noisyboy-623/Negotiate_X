@@ -35,13 +35,7 @@ const Register = () => {
         setError(response.message || "Failed to register");
       }
     } catch (err) {
-  console.log("FULL ERROR:", err);
-  console.log("ERR.MESSAGE:", err.message);
-  console.log("ERR.RESPONSE:", err.response);
-  console.log("ERR.RESPONSE.DATA:", err.response?.data);
-
-  setError(err.message);
-
+      setError(err.message || "Failed to register");
     } finally {
       setIsLoading(false);
     }

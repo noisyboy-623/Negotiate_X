@@ -27,6 +27,7 @@ export function useAuth() {
       dispatch(
         setError(err.message || "Login Failed"),
       );
+      throw err;
     } finally {
       dispatch(setLoading(false));
     }
