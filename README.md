@@ -84,48 +84,66 @@ C --> D[Select Product]
 D --> E[Choose AI Agent]
 E --> F[Start Negotiation]
 F --> G{Rounds <= 5?}
-G -->|Yes| F
+G -->|Continue| F
 G -->|Accept Deal| H[End Negotiation]
 H --> I[Score + Leaderboard]
+```
 
-🛠️ Tech Stack
-Layer:	Technology
-Frontend:	React, Tailwind CSS
-Backend:	Node.js, Express
-Database:	MongoDB
-Real-Time:	Socket.io
-AI:	LangChain, Google GenAI, Mistral
-Auth:	JWT, Cookies
-Security:	Redis, Nodemailer
+## 🛠️ Tech Stack
 
-⚡ Challenges & Learnings
-Handling CORS + cookies across environments
-Managing secure session-based authentication
-Building real-time systems with WebSockets
-Designing non-trivial AI behavior
+| Layer        | Technology |
+|-------------|-----------|
+| Frontend     | React, Tailwind CSS |
+| Backend      | Node.js, Express |
+| Database     | MongoDB |
+| Real-Time    | Socket.io |
+| AI           | LangChain, Google GenAI, Mistral |
+| Auth         | JWT, Cookies |
+| Security     | Redis, Nodemailer |
 
-🤖 AI Behavior
+---
 
-The AI is intentionally designed to be:
+## ⚡ Challenges & Learnings
 
-❗ Resistant and realistic — it won’t easily reduce prices
+- Handling **CORS + cookies across environments**  
+- Managing **secure session-based authentication**  
+- Building **real-time systems with WebSockets**  
+- Designing **non-trivial AI behavior**  
 
-🙌 Acknowledgement
+---
 
-Built as part of
-Sheriyans Coding School — Cohort 2.0
+## 🤖 AI Behavior
 
-Special thanks to
-👉 [Ankur Prajapati](https://github.com/ankurdotio) for backend guidance
+> ❗ The AI is intentionally designed to be **resistant and realistic** — it won’t easily reduce prices  
 
-👨‍💻 Author
+---
 
-Tejas H Shekhar
+## 🙌 Acknowledgement
 
-⭐ Support
+Built as part of  
+**Sheriyans Coding School — Cohort 2.0**
+
+Special thanks to  
+👉 [Ankur Prajapati](https://github.com/ankurdotio) for backend guidance  
+
+---
+
+## 👨‍💻 Author
+
+**Tejas H Shekhar**
+
+---
+
+## ⭐ Support
 
 If you liked this project:
-⭐ Star the repo
-🍴 Fork it
-💬 Share feedback
-<p align="center"> <b>🚀 Building. Learning. Improving — every single day.</b> </p> ```
+
+- ⭐ Star the repo  
+- 🍴 Fork it  
+- 💬 Share feedback  
+
+---
+
+<p align="center">
+  <b>🚀 Building. Learning. Improving — every single day.</b>
+</p>
