@@ -4,50 +4,50 @@ import { sendEmail } from "../services/mail.service.js";
 import redis from "../config/cache.js"
 
 export async function registerController(req, res) {
-  const { username, email, password } = req.body;
+  try {
+    const { username, email, password } = req.body;
 
-  const isUserAlreadyExists = await userModel.findOne({
-    $or: [{ email }, { username }],
-  });
+    const isUserAlreadyExists = await userModel.findOne({
+      $or: [{ email }, { username }],
+    });
 
-  if (isUserAlreadyExists) {
-    return res.status(400).json({
-      message: "User with this email or username already exists",
+    if (isUserAlreadyExists) {
+      return res.status(400).json({
+        message: "User with this email or username already exists",
+        success: false,
+      });
+    }
+
+    const user = await userModel.create({ username, email, password });
+
+    return res.status(201).json({
+      message: "User registered successfully",
+      success: true,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+
+  } catch (err) {
+    console.log("REGISTER ERROR:", err);
+
+    // 🔥 Handle Mongoose validation errors
+    if (err.name === "ValidationError") {
+      const messages = Object.values(err.errors).map(e => e.message);
+
+      return res.status(400).json({
+        message: messages[0], // first validation error
+        success: false,
+      });
+    }
+
+    return res.status(500).json({
+      message: "Something went wrong",
       success: false,
-      err: "User already exists",
     });
   }
-
-  const user = await userModel.create({ username, email, password });
-  const emailVerificaton = jwt.sign(
-    {
-      email: user.email,
-    },
-    process.env.JWT_SECRET,
-  );
-
-  await sendEmail({
-    to: email,
-    subject: "Welcome to Negotiate_X!",
-    html: `
-                <p>Hi ${username},</p>
-                <p>Thank you registering at <strong>Negotiate_X</strong>, We're excited to have you onboard!</p>
-                <P>Please verify your email by clicking on the link below: </p>
-                <a href="https://negotiate-x-backend.onrender.com/api/auth/verify-email/?token=${emailVerificaton}">Verify Email </a>
-                <p> If it wasn't you , please ignore this email. </p>
-                <p>Best Regards, <br>The Negotiate_X Team </p>
-                `,
-  });
-
-  return res.status(201).json({
-    message: "User registered successfully",
-    success: true,
-    user: {
-      id: user._id,
-      username: user.username,
-      email: user.email,
-    },
-  });
 }
 
 export async function verifyEmail(req, res) {

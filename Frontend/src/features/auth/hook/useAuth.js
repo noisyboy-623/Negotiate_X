@@ -11,7 +11,7 @@ export function useAuth() {
       const data = await register({ email, username, password });
     } catch (err) {
       dispatch(
-        setError(err.response?.data?.message || "Registration Failed"),
+        setError(err.message || "Registration Failed")
       );
     } finally {
       dispatch(setLoading(false));
@@ -25,7 +25,7 @@ export function useAuth() {
       dispatch (setUser(data.user))
     } catch (err) {
       dispatch(
-        setError(err.response?.data?.message || "Login Failed"),
+        setError(err.message || "Login Failed"),
       );
     } finally {
       dispatch(setLoading(false));
