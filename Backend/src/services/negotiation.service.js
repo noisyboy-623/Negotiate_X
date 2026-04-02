@@ -8,7 +8,8 @@ export const analyzeUserMessage = (msg) => {
   if (irrelevantKeywords.some((word) => msg.includes(word))) {
     return "irrelevant";
   }
-
+  
+  if (/\d+/.test(msg)) return "offer";
   if (
     msg.includes("student") ||
     msg.includes("budget") ||
@@ -29,7 +30,7 @@ export const analyzeUserMessage = (msg) => {
     msg.includes("best price")
   )
     return "pressure";
-
+  // ✅ detect numeric offer
   return "neutral";
 };
 
@@ -43,15 +44,15 @@ export const updatePrice = (game, intent) => {
   // 🧠 BASED ON AGENT PERSONALITY
   switch (game.strategy) {
     case "friendly":
-      reduction = 2000;
+      reduction = Math.floor(game.currentPrice * 0.03); // 3%
       break;
 
     case "balanced":
-      reduction = 1200;
+      reduction = Math.floor(game.currentPrice * 0.02); // 2%
       break;
 
     case "greedy":
-      reduction = 400;
+      reduction = Math.floor(game.currentPrice * 0.01); // 1  %
       break;
 
     default:
@@ -81,6 +82,11 @@ export const updatePrice = (game, intent) => {
   return Math.max(newPrice, game.minPrice);
 };
 
+export const extractUserOffer = (msg) => {
+  const match = msg.match(/\d+/);
+  return match ? parseInt(match[0]) : null;
+};
+
 // 🤖 Generate controlled seller prompt
 export const generateSellerPrompt = (game, userMessage, intent) => {
   const personalityText =
@@ -103,14 +109,15 @@ Rules:
 - Never end the conversation early
 - Always continue negotiating until the final round
 - You have a hidden minimum price but NEVER reveal it
-- The ONLY valid price is ₹${game.currentPrice}
-- Do NOT generate or suggest any other price
+- You must ALWAYS use the updated current price ₹${game.currentPrice}
+- Do not invent random prices, only use the provided current price
 - Always include ₹${game.currentPrice} exactly
 - Keep response short (1-2 lines)
 - Do not say 'no negotiation' unless it is the final round
 - Each round, slightly adjust your tone based on negotiation progress
 - Do not end the conversation or say goodbye unless the game is over
 - Avoid repeating the same phrases every round  
+- If user gives a price close to your current price, you may accept the deal.
 
 ${
   game.round === game.maxRounds - 1
