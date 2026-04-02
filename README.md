@@ -76,21 +76,27 @@
 
 ## 🔄 Application Flow
 
-```text
-Register → Verify Email → Login  
-→ Select Product → Choose AI Agent  
-→ Start Negotiation (Max 5 Rounds / Accept Anytime)  
-→ Final Score → Leaderboard
+```mermaid
+graph TD
+A[User Registers] --> B[Email Verification]
+B --> C[Login]
+C --> D[Select Product]
+D --> E[Choose AI Agent]
+E --> F[Start Negotiation]
+F --> G{Rounds <= 5?}
+G -->|Yes| F
+G -->|Accept Deal| H[End Negotiation]
+H --> I[Score + Leaderboard]
 
 🛠️ Tech Stack
-Layer	Technology
-Frontend	React, Tailwind CSS
-Backend	Node.js, Express
-Database	MongoDB
-Real-Time	Socket.io
-AI	LangChain, Google GenAI, Mistral
-Auth	JWT, Cookies
-Security	Redis, Nodemailer
+Layer:	Technology
+Frontend:	React, Tailwind CSS
+Backend:	Node.js, Express
+Database:	MongoDB
+Real-Time:	Socket.io
+AI:	LangChain, Google GenAI, Mistral
+Auth:	JWT, Cookies
+Security:	Redis, Nodemailer
 
 ⚡ Challenges & Learnings
 Handling CORS + cookies across environments
@@ -110,7 +116,7 @@ Built as part of
 Sheriyans Coding School — Cohort 2.0
 
 Special thanks to
-👉 Ankur Prajapati for backend guidance
+👉 [Ankur Prajapati](https://github.com/ankurdotio) for backend guidance
 
 👨‍💻 Author
 
@@ -119,7 +125,6 @@ Tejas H Shekhar
 ⭐ Support
 
 If you liked this project:
-
 ⭐ Star the repo
 🍴 Fork it
 💬 Share feedback
