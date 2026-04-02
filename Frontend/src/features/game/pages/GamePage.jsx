@@ -13,8 +13,8 @@ import ghost from "../images/ghost.png";
 
 import { Navbar, Sidebar } from "../components/index";
 
-// const socket = io("https://negotiate-x-backend.onrender.com");
-const socket = io("http://localhost:3000");
+const socket = io("https://negotiate-x-backend.onrender.com");
+// const socket = io("http://localhost:3000");
 
 const products = [
   {
