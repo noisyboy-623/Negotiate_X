@@ -1,53 +1,59 @@
 import { userModel } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/mail.service.js";
-import redis from "../config/cache.js"
+import redis from "../config/cache.js";
 
 export async function registerController(req, res) {
-  try {
-    const { username, email, password } = req.body;
+  console.log("🔥 Register API hit");
+  const { username, email, password } = req.body;
 
-    const isUserAlreadyExists = await userModel.findOne({
-      $or: [{ email }, { username }],
-    });
+  const isUserAlreadyExists = await userModel.findOne({
+    $or: [{ email }, { username }],
+  });
 
-    if (isUserAlreadyExists) {
-      return res.status(400).json({
-        message: "User with this email or username already exists",
-        success: false,
-      });
-    }
-
-    const user = await userModel.create({ username, email, password });
-
-    return res.status(201).json({
-      message: "User registered successfully",
-      success: true,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
-    });
-
-  } catch (err) {
-    console.log("REGISTER ERROR:", err);
-
-    // 🔥 Handle Mongoose validation errors
-    if (err.name === "ValidationError") {
-      const messages = Object.values(err.errors).map(e => e.message);
-
-      return res.status(400).json({
-        message: messages[0], // first validation error
-        success: false,
-      });
-    }
-
-    return res.status(500).json({
-      message: "Something went wrong",
+  if (isUserAlreadyExists) {
+    return res.status(400).json({
+      message: "User with this email or username already exists",
       success: false,
+      err: "User already exists",
     });
   }
+
+  const user = await userModel.create({ username, email, password });
+  const emailVerification = jwt.sign(
+    {
+      email: user.email,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" },
+  );
+
+  try {
+    await sendEmail({
+      to: email,
+      subject: "Welcome to Negotiate_X!",
+      html: `
+                <p>Hi ${username},</p>
+                <p>Thank you registering at <strong>Negotiate_X</strong>, We're excited to have you onboard!</p>
+                <P>Please verify your email by clicking on the link below: </p>
+                <a href="https://negotiate-x-backend.onrender.com/api/auth/verify-email/?token=${emailVerification}">Verify Email </a>
+                <p> If it wasn't you , please ignore this email. </p>
+                <p>Best Regards, <br>The Negotiate_X Team </p>
+                `,
+    });
+  } catch (err) {
+    console.log("Email sending failed:", err);
+  }
+
+  return res.status(201).json({
+    message: "User registered successfully",
+    success: true,
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    },
+  });
 }
 
 export async function verifyEmail(req, res) {
@@ -272,7 +278,7 @@ export async function verifyEmail(req, res) {
           <p class="subtitle">You're all set to begin your negotiation journey</p>
           <p>Your email has been verified successfully. You can now log in to your account and start playing.</p>
 
-          <a href="https://negotiate-x-frontend.onrender.com/login" class="login-btn">Go to Login</a>
+          <a href="http://localhost:5173/login" class="login-btn">Go to Login</a>
 
           <div class="timer">
             Redirecting in <strong>5 seconds</strong>... or click the button above.
@@ -281,7 +287,7 @@ export async function verifyEmail(req, res) {
 
         <script>
           setTimeout(() => {
-            window.location.href = 'https://negotiate-x-frontend.onrender.com';
+            window.location.href = 'http://localhost:5173/login';
           }, 5000);
         </script>
       </body>
@@ -302,7 +308,7 @@ export async function loginController(req, res) {
   const { email, password } = req.body;
 
   const user = await userModel.findOne({
-    email
+    email,
   });
 
   if (!user) {
@@ -332,19 +338,19 @@ export async function loginController(req, res) {
 
   const token = jwt.sign(
     {
-      id:user._id,
+      id: user._id,
       username: user.username,
     },
     process.env.JWT_SECRET,
     { expiresIn: "7d" },
   );
 
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,        // ✅ REQUIRED for HTTPS (Render)
-  sameSite: "none",    // ✅ REQUIRED for cross-origin
-  path: "/",           // ✅ good practice
-});
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true, // ✅ REQUIRED for HTTPS (Render)
+    sameSite: "none", // ✅ REQUIRED for cross-origin
+    path: "/", // ✅ good practice
+  });
 
   res.status(201).json({
     message: "User logged-in successfully",
@@ -358,38 +364,37 @@ res.cookie("token", token, {
 }
 
 export async function getMeController(req, res) {
+  const userId = req.user.id;
+  console.log(req.user);
 
-    const userId = req.user.id
-    console.log(req.user)
+  const user = await userModel.findById(userId).select("-password");
 
-    const user = await userModel.findById(userId).select("-password")
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+      success: false,
+      err: "User not found",
+    });
+  }
 
-    if(!user){
-        return res.status(404).json({
-            message: "User not found",
-            success: false,
-            err: "User not found"
-        })
-    }
-
-    res.status(200).json({
-        message: "User details fetched successfully",
-        success: true,
-        user
-    })
+  res.status(200).json({
+    message: "User details fetched successfully",
+    success: true,
+    user,
+  });
 }
 
 export async function logoutUser(req, res) {
   const token = req.cookies.token;
 
   res.clearCookie("token", {
-  httpOnly: true,
-  secure: true,
-  sameSite: "None",
-  path: "/",
-});
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    path: "/",
+  });
 
-  await redis.set(token, Date.now().toString(),"EX",60*60)
+  await redis.set(token, Date.now().toString(), "EX", 60 * 60);
 
   res.status(200).json({
     message: "User logged out successfully",
