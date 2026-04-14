@@ -278,7 +278,7 @@ export async function verifyEmail(req, res) {
           <p class="subtitle">You're all set to begin your negotiation journey</p>
           <p>Your email has been verified successfully. You can now log in to your account and start playing.</p>
 
-          <a href="http://localhost:5173/login" class="login-btn">Go to Login</a>
+          <a href="https://negotiate-x-frontend.onrender.com/login" class="login-btn">Go to Login</a>
 
           <div class="timer">
             Redirecting in <strong>5 seconds</strong>... or click the button above.
@@ -287,7 +287,7 @@ export async function verifyEmail(req, res) {
 
         <script>
           setTimeout(() => {
-            window.location.href = 'http://localhost:5173/login';
+            window.location.href = 'https://negotiate-x-frontend.onrender.com/login';
           }, 5000);
         </script>
       </body>

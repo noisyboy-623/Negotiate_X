@@ -1,4 +1,8 @@
 import nodemailer from "nodemailer";
+import dns from "node:dns";
+
+// Fix for Render IPv6 network unreachability (ENETUNREACH)
+dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
