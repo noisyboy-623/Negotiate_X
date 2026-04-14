@@ -40,7 +40,7 @@ export async function sendEmail({ to, subject, text, html }) {
       .replace(/=+$/, "");
 
     // 3. Send over Gmail REST HTTP API (Port 443 - Never blocked!)
-    const sendRes = await fetch("https://gmail.googleapis.com/upload/gmail/v1/users/me/messages/send", {
+    const sendRes = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${tokenData.access_token}`,
